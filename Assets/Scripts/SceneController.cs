@@ -24,6 +24,10 @@ public class SceneController : MonoBehaviour
     void Start()
     {
         linesArray = new Line[rowCount];
+        // set field angle
+        Field.transform.eulerAngles = new Vector3(60, 0, 0);
+        Field.transform.position = new Vector3(0, 0, 0);
+
         //create lines
         for (int i = 0; i < rowCount; i++)
         {
@@ -34,12 +38,19 @@ public class SceneController : MonoBehaviour
             float lineSizeZ = linesArray[i].transform.localScale.z;
 
             // set star position of line
-            linesArray[i].transform.position = new Vector3(startX + offset * i, startY, lineSizeZ * -1);//
+            linesArray[i].transform.position = new Vector3(0, 0, 0);//lineSizeZ * -1
+            // set start angle of line
+            linesArray[i].transform.eulerAngles = new Vector3(60, 0, 0);
+
         }
-        // set field angle
-        Field.transform.eulerAngles = new Vector3(70, 0, 0);
-        Field.transform.position = new Vector3(0, 0, 5);
-    }
+
+        for (int i = 0; i < rowCount; i++)
+        {
+            Debug.Log("Pos z: "+ linesArray[i].transform.localPosition.z);
+            float lineSizeZ = linesArray[i].transform.localScale.z;
+            linesArray[i].transform.localPosition = new Vector3(startX + offset * i, startY, lineSizeZ * -1.5f);
+        }
+     }
 
     public void StartGame()
     {

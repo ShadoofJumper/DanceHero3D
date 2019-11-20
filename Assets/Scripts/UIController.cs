@@ -124,7 +124,7 @@ public class UIController : MonoBehaviour
         float z = 0;
         buttonAction.transform.position = new Vector3(x, y, z);
         // set button color
-        buttonAction.GetComponent<SpriteRenderer>().color = buttonColorArray[buttonId];
+        buttonAction.GetComponent<MeshRenderer>().material.color = buttonColorArray[buttonId];
         // set button text
         // get text object of button
         GameObject text = buttonActionOrigin.transform.GetChild(0).gameObject;
@@ -146,7 +146,7 @@ public class UIController : MonoBehaviour
         float z = 0;
         connectArea.transform.position = new Vector3(x, y, z);
         //set area color
-        connectArea.GetComponent<SpriteRenderer>().color = new Color(0.0f, 1.0f, 0.0022f, 0.5f);
+        connectArea.GetComponent<MeshRenderer>().material.color = new Color(0.0f, 1.0f, 0.0022f, 0.5f);
     }
 
     public void OnScoreUpdate()
