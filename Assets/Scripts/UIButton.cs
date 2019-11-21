@@ -5,6 +5,13 @@ using UnityEngine;
 public class UIButton : MonoBehaviour
 {
     private ConnectPoint childConnector;
+    private Vector3 startButtonScale;
+    public float kScale = 0.05f;
+
+    void Start()
+    {
+        startButtonScale = transform.localScale;
+    }
 
     public void SetChildConnector(ConnectPoint connector)
     {
@@ -25,13 +32,15 @@ public class UIButton : MonoBehaviour
     }
     public void PressButton()
     {
+        float scaleKPositiv = 1 - kScale;
         //change button size for intereactive feedback
-        transform.localScale = new Vector3(4.0f, 4.0f, 4.0f);
+        transform.localScale = new Vector3(startButtonScale.x * scaleKPositiv, startButtonScale.y * scaleKPositiv, startButtonScale.z * scaleKPositiv);
     }
 
     public void UnpressButtton()
     {
-        transform.localScale = new Vector3(5.0f, 5.0f, 5.0f); ;
+        float scaleKNegative = 1 + kScale;
+        transform.localScale = new Vector3(startButtonScale.x * scaleKNegative, startButtonScale.y * scaleKNegative, startButtonScale.z * scaleKNegative); ;
     }
 
 

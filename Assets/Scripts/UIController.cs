@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Text mainTime;
     [SerializeField] private Button startGame;
     [SerializeField] private Button resetGame;
+    [SerializeField] private GameObject placeForButtons;
 
     public float currentTime = 60.0f;
     private bool canCount = true;
@@ -119,9 +120,12 @@ public class UIController : MonoBehaviour
         // add to array
         buttonArray[buttonId] = buttonAction;
         // place button
-        float x = startX + offset * buttonId;
-        float y = startY - 0.6f; // place under line start
-        float z = 0;
+        // get place for buttons position
+        Vector3 placePos = placeForButtons.transform.position;
+
+        float x = placePos.x - 2.0f + offset * buttonId;
+        float y = placePos.y; // place under line start
+        float z = placePos.z;
         buttonAction.transform.position = new Vector3(x, y, z);
         // set button color
         buttonAction.GetComponent<MeshRenderer>().material.color = buttonColorArray[buttonId];
