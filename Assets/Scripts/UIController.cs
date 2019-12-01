@@ -144,10 +144,19 @@ public class UIController : MonoBehaviour
         // create connect area for button
         ConnectPoint connectArea = Instantiate(connectionPointOrigin) as ConnectPoint;
         connectArray[buttonId] = connectArea;
+
+        // get line for coonect point
+        Line[] lines =  this.GetComponent<SceneController>().GetLinesArray();
+        Line connectPointLine = lines[buttonId];
+
+        // attach connecet point to line
+        connectArea.transform.SetParent(connectPointLine.transform);
+
         // place area
-        float x = startX + offset * buttonId;
-        float y = startY + 0.38f; // place upper button
+        float x = 0;
+        float y = 0; // place under line start
         float z = 0;
+
         connectArea.transform.position = new Vector3(x, y, z);
         //set area color
         connectArea.GetComponent<MeshRenderer>().material.color = new Color(0.0f, 1.0f, 0.0022f, 0.5f);

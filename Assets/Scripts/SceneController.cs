@@ -52,6 +52,12 @@ public class SceneController : MonoBehaviour
         }
      }
 
+    public Line[] GetLinesArray()
+    {
+        return linesArray;
+    }
+
+
     public void StartGame()
     {
         gameInProgress = true;
