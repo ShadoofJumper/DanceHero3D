@@ -9,13 +9,15 @@ public class Coin : MonoBehaviour
     private float coinSpeed;
     private Vector3 start;
     private Vector3 finish;
+    private GameObject parentObject;
 
-    public void SetParametrsCoin(Vector3 start, Vector3 finish, CoinTypeConst coinType, float coinSpeed = 1.0f)
+    public void SetParametrsCoin(Vector3 start, Vector3 finish, CoinTypeConst coinType, GameObject parentObject, float coinSpeed = 1.0f)
     {
         this.coinSpeed = coinSpeed;
         this.start = start;
         this.finish = finish;
         this.coinType = coinType;
+        this.parentObject = parentObject;
     }
 
     public CoinTypeConst GetRandomCoinType()
@@ -48,20 +50,25 @@ public class Coin : MonoBehaviour
     void Start()
     {
         // set start position
-        transform.position = start;
+        transform.position = new Vector3(start.x, start.y, start.z);//start;
+        Debug.Log("start: " + start);
+        transform.eulerAngles = new Vector3(-30, 0, 0);
+        // set parent for cube
+        transform.SetParent(parentObject.transform);
+
         // set coin color
-        SpriteRenderer lineSprite = GetComponent<SpriteRenderer>();
+        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
         if (coinType == CoinTypeConst.Red)
         {
-            lineSprite.color = Color.red;
+            meshRenderer.material.color = Color.red;
         }
         else if (coinType == CoinTypeConst.Blue)
         {
-            lineSprite.color = Color.blue;
+            meshRenderer.material.color = Color.blue;
         }
         else if (coinType == CoinTypeConst.Green)
         {
-            lineSprite.color = Color.green;
+            meshRenderer.material.color = Color.green;
         }
     }
 
@@ -72,15 +79,15 @@ public class Coin : MonoBehaviour
         if (isDrop)
         {
             movement.y -= coinSpeed;
-            transform.position += movement * Time.deltaTime;// * coinSpeed 
+            transform.localPosition += movement * Time.deltaTime;// * coinSpeed 
         }
 
         // destroy coin if it under finish
-        if (transform.position.y < (this.finish.y - 1)) //for offset
-        {
-            Managers.Score.FailScore();
-            Destroy(this.gameObject);
-        }
+        //if (transform.position.y < (this.finish.y - 1)) //for offset
+        //{
+        //    Managers.Score.FailScore();
+       //     Destroy(this.gameObject);
+        //}
     }
 
 }

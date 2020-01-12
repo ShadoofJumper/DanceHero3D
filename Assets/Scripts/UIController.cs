@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button startGame;
     [SerializeField] private Button resetGame;
     [SerializeField] private GameObject placeForButtons;
+    [SerializeField] private GameObject placeForConnector;
 
     public float currentTime = 60.0f;
     private bool canCount = true;
@@ -149,13 +150,12 @@ public class UIController : MonoBehaviour
         Line[] lines =  this.GetComponent<SceneController>().GetLinesArray();
         Line connectPointLine = lines[buttonId];
 
-        // attach connecet point to line
-        connectArea.transform.SetParent(connectPointLine.transform);
-
         // place area
-        float x = 0;
-        float y = 0; // place under line start
-        float z = 0;
+        Vector3 placePos = placeForConnector.transform.position;
+
+        float x = placePos.x - 2.0f + offset * buttonId;
+        float y = placePos.y; // place under line start
+        float z = placePos.z;
 
         connectArea.transform.position = new Vector3(x, y, z);
         //set area color

@@ -16,6 +16,7 @@ public class SceneController : MonoBehaviour
     [SerializeField] private Coin coinPrefab;
     [SerializeField] private Line linePrefab;
     [SerializeField] private GameObject Field;
+    [SerializeField] private GameObject PlaceToDropCoins;
 
     private bool gameEnd = false;
     private Coin currentCoin;
@@ -46,7 +47,6 @@ public class SceneController : MonoBehaviour
 
         for (int i = 0; i < rowCount; i++)
         {
-            Debug.Log("Pos z: "+ linesArray[i].transform.localPosition.z);
             float lineSizeZ = linesArray[i].transform.localScale.z;
             linesArray[i].transform.localPosition = new Vector3(startX + offset * i, startY, lineSizeZ * -1.5f);
         }
@@ -93,12 +93,13 @@ public class SceneController : MonoBehaviour
     private IEnumerator StartLineDrop(int lineId)
     {
         // Get lite top point
-        float lineTopPoint = linesArray[lineId].GetLineTopPoint(startY);
+        //float lineTopPoint = linesArray[lineId].GetLineTopPoint(startY);
         // calculte start and finish
         float x = startX + offset * lineId;
-        float y = lineTopPoint;
+        float y = PlaceToDropCoins.transform.position.y;
+        float z = PlaceToDropCoins.transform.position.z;
 
-        Vector3 start = new Vector3(x, y, 0);
+        Vector3 start = new Vector3(x, y, z);
         Vector3 finish = new Vector3(x, startY, 0);
         while (!gameEnd)
         {
@@ -114,7 +115,7 @@ public class SceneController : MonoBehaviour
             CoinTypeConst coinType = currentCoin.GetRandomCoinType();
 
             // set coin parametrs
-            currentCoin.SetParametrsCoin(start, finish, coinType, coinSpeed);
+            currentCoin.SetParametrsCoin(start, finish, coinType, Field, coinSpeed);
             //drop coin, set start and finish for droped coin
             currentCoin.DropCoin();
 

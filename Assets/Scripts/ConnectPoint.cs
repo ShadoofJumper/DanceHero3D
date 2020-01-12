@@ -6,14 +6,22 @@ public class ConnectPoint : MonoBehaviour
 {
     //radius of detection coin
     private float radius = 0.3f;
+    private float pressScaleK = 0.9f;
+    private Vector3 startScale;
+
+    void Start()
+    {
+        startScale = transform.localScale;
+    }
+
 
     public void PressButton()
     {
         //change button size for intereactive feedback
-        transform.localScale = new Vector3(4.0f, 4.0f, 4.0f);
+        transform.localScale = startScale * pressScaleK;
         //check coins near
         Collider[] coinConnect = CheckConnecting();
-        Debug.Log("" + coinConnect.Length);
+
         if (coinConnect.Length == 0)
         {
             Managers.Score.FailScore();
@@ -21,7 +29,7 @@ public class ConnectPoint : MonoBehaviour
     }
     public void UnpressButtton()
     {
-        transform.localScale = new Vector3(5.0f, 5.0f, 5.0f); ;
+        transform.localScale = startScale;
 
     }
 
@@ -32,7 +40,13 @@ public class ConnectPoint : MonoBehaviour
         foreach (Collider hitCollider in hitColliders)
         {
             // if have then Collect coin
-            hitCollider.gameObject.GetComponent<Coin>().CollectCoin();
+            //
+            
+            if (hitCollider.gameObject.GetComponent<Coin>())
+            {
+                Debug.Log("here");
+                hitCollider.gameObject.GetComponent<Coin>().CollectCoin();
+            }
         }
 
         return hitColliders;
