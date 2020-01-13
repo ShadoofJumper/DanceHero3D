@@ -38,7 +38,7 @@ public class ScoreManager : MonoBehaviour, IGameManager
         }
 
         elementInRow += 1;
-        //UIController.OnScoreUpdate();
+        UIController.OnScoreUpdate();
     }
 
     public void FailScore()
@@ -46,7 +46,7 @@ public class ScoreManager : MonoBehaviour, IGameManager
         elementInRow = 0;
         bonusStep = 1;
         Debug.Log("Fail!");
-        //UIController.OnScoreUpdate();
+        UIController.OnScoreUpdate();
     }
 
     private void IncreasScoreBonus()

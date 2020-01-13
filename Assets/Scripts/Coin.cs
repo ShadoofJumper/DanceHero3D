@@ -51,7 +51,6 @@ public class Coin : MonoBehaviour
     {
         // set start position
         transform.position = new Vector3(start.x, start.y, start.z);//start;
-        Debug.Log("start: " + start);
         transform.eulerAngles = new Vector3(-30, 0, 0);
         // set parent for cube
         transform.SetParent(parentObject.transform);
@@ -79,7 +78,10 @@ public class Coin : MonoBehaviour
         if (isDrop)
         {
             movement.y -= coinSpeed;
-            transform.localPosition += movement * Time.deltaTime;// * coinSpeed 
+            transform.localPosition += movement * Time.deltaTime;// * coinSpeed
+            Debug.Log("y: " + transform.localPosition.y);
+            Debug.Log("x: " + transform.localPosition.x);
+            Debug.Log("z: " + transform.localPosition.z);
         }
 
         // destroy coin if it under finish

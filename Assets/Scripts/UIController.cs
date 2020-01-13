@@ -165,6 +165,7 @@ public class UIController : MonoBehaviour
     public void OnScoreUpdate()
     {
         string message = "Score: " + Managers.Score.currentScore;
+        Debug.Log("score: "+ message);
         if (Managers.Score.bonusStep > 1)
         {
             message = message + " x" + Managers.Score.bonusStep + "!";

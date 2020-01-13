@@ -44,7 +44,6 @@ public class ConnectPoint : MonoBehaviour
             
             if (hitCollider.gameObject.GetComponent<Coin>())
             {
-                Debug.Log("here");
                 hitCollider.gameObject.GetComponent<Coin>().CollectCoin();
             }
         }
