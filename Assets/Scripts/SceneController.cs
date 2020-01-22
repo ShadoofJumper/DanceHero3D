@@ -9,8 +9,9 @@ public class SceneController : MonoBehaviour
     public float coinSpeed = 1.0f;
     private Line[] linesArray;
     // position of line
-    public float startX = -2.0f;
+    public float startX = -1.5f;
     public float startY = -2.0f;
+    public float yCoordinatForDestroyCoin = -4.75f;
     public bool gameInProgress = false;
 
     [SerializeField] private Coin coinPrefab;
@@ -100,7 +101,7 @@ public class SceneController : MonoBehaviour
         float z = PlaceToDropCoins.transform.position.z;
 
         Vector3 start = new Vector3(x, y, z);
-        Vector3 finish = new Vector3(x, startY, 0);
+        Vector3 finish = new Vector3(x, yCoordinatForDestroyCoin, 0);
         while (!gameEnd)
         {
             //wait random time

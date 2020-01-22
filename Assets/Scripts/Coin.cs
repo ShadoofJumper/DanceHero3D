@@ -10,6 +10,8 @@ public class Coin : MonoBehaviour
     private Vector3 start;
     private Vector3 finish;
     private GameObject parentObject;
+    private float TIME_DESTROY = 3.0f;
+    private Rigidbody selfRigidbody;
 
     public void SetParametrsCoin(Vector3 start, Vector3 finish, CoinTypeConst coinType, GameObject parentObject, float coinSpeed = 1.0f)
     {
@@ -41,7 +43,6 @@ public class Coin : MonoBehaviour
     }
     public void CollectCoin()
     {
-        Debug.Log("Collect");
         Managers.Score.IncreasScore();
         Destroy(this.gameObject);
     }
@@ -54,6 +55,10 @@ public class Coin : MonoBehaviour
         transform.eulerAngles = new Vector3(-30, 0, 0);
         // set parent for cube
         transform.SetParent(parentObject.transform);
+        //disable rigindbody gravity
+        
+        selfRigidbody = gameObject.GetComponent<Rigidbody>();
+        selfRigidbody.useGravity = false;
 
         // set coin color
         MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
@@ -79,17 +84,36 @@ public class Coin : MonoBehaviour
         {
             movement.y -= coinSpeed;
             transform.localPosition += movement * Time.deltaTime;// * coinSpeed
-            Debug.Log("y: " + transform.localPosition.y);
-            Debug.Log("x: " + transform.localPosition.x);
-            Debug.Log("z: " + transform.localPosition.z);
         }
 
         // destroy coin if it under finish
-        //if (transform.position.y < (this.finish.y - 1)) //for offset
-        //{
-        //    Managers.Score.FailScore();
-       //     Destroy(this.gameObject);
-        //}
+        if (transform.localPosition.y < finish.y) //for offset
+        {
+            Managers.Score.FailScore();
+            gameObject.GetComponent<Rigidbody>().useGravity = true;
+            // add timer for destroy element after it fall
+            StartCoroutine(DestroyCoinAfterFall());
+        }
     }
+
+    private IEnumerator DestroyCoinAfterFall()
+    {
+        Vector3 torque;
+        torque.x = Random.Range(-200, 200);
+        torque.y = Random.Range(-200, 200);
+        torque.z = Random.Range(-200, 200);
+        gameObject.GetComponent<ConstantForce>().torque = torque;
+
+        // add force for rigidbody
+        //selfRigidbody.AddForce(impulseVector, ForceMode.Impulse);
+
+        //wait time
+        yield return new WaitForSeconds(TIME_DESTROY);
+
+        Destroy(this.gameObject);
+        yield return null;
+    }
+
+    
 
 }

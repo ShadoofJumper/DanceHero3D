@@ -17,7 +17,7 @@ public class UIController : MonoBehaviour
     public float currentTime = 60.0f;
     private bool canCount = true;
 
-    private float startX = -2.0f;
+    private float startX = -1.5f;
     private float startY = -2.0f;
     private int rowCount = 3;
     private float offset = 2;
@@ -124,7 +124,7 @@ public class UIController : MonoBehaviour
         // get place for buttons position
         Vector3 placePos = placeForButtons.transform.position;
 
-        float x = placePos.x - 2.0f + offset * buttonId;
+        float x = placePos.x + startX + offset * buttonId;
         float y = placePos.y; // place under line start
         float z = placePos.z;
         buttonAction.transform.position = new Vector3(x, y, z);
@@ -153,7 +153,7 @@ public class UIController : MonoBehaviour
         // place area
         Vector3 placePos = placeForConnector.transform.position;
 
-        float x = placePos.x - 2.0f + offset * buttonId;
+        float x = placePos.x + startX + offset * buttonId;
         float y = placePos.y; // place under line start
         float z = placePos.z;
 
